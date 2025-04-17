@@ -39,7 +39,8 @@
             "outputMode": "server",
             "ssr": {
               "entry": "src/server.ts"
-            }
+            },
+            "aot": true
           },
           "configurations": {
             "production": {
@@ -55,6 +56,7 @@
                   "maximumError": "8kB"
                 }
               ],
+              "aot": true,
               "outputHashing": "all"
             },
             "development": {
@@ -100,8 +102,23 @@
             ],
             "scripts": []
           }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.html"
+            ]
+          }
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "de06f978-bdab-494e-b14c-69de28070c15",
+    "schematicCollections": [
+      "@angular-eslint/schematics"
+    ]
   }
 }

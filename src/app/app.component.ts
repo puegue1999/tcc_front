@@ -1,12 +1,18 @@
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { RouterLink, RouterOutlet } from '@angular/router';
+import { NgFor } from '@angular/common';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  styleUrls: ['./app.component.scss'],
+  standalone: true,
+  imports: [RouterOutlet]
 })
-export class AppComponent {
-  title = 'tcc_front';
+export class AppComponent implements OnInit {
+  title = 'TCC';
+
+  ngOnInit(): void {
+    this.title = 'TCC';
+  }
 }

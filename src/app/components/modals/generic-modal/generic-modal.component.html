@@ -1,0 +1,18 @@
+<div
+  class="scheduleModalWrapper"
+  [style]="{ 'z-index': zIndex }"
+  [ngClass]="{ 'is-visible': isVisible }"
+>
+  <div class="modal-wrapper">
+    <div
+      class="modalBox"
+      [ngStyle]="{
+        'min-width': minWidth,
+        'max-width': biggerThanSmScreen ? maxWidth : '',
+        width: width
+      }"
+    >
+      <ng-content></ng-content>
+    </div>
+  </div>
+</div>

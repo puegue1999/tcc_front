@@ -1,0 +1,64 @@
+@import '../../../styles/_mixins';
+
+.scheduleModalWrapper {
+  display: flex;
+  flex-direction: column;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+
+  will-change: opacity;
+  overflow-y: auto;
+  overflow-x: hidden;
+  z-index: 20;
+
+  transition: opacity 150ms;
+  @include transition-ease;
+
+  background: #20334650;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+
+  pointer-events: none;
+  opacity: 0;
+
+  &.is-visible {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  &::before {
+    content: "";
+    display: block;
+    width: 100%;
+    padding-bottom: 20px;
+  }
+
+  &::after {
+    content: "";
+    display: block;
+    width: 100%;
+    padding-top: 20px;
+  }
+}
+
+.modal-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 100%;
+}
+
+.modalBox {
+  border-radius: 1.25rem;
+  max-width: 95vw;
+  border: 1px solid #A9AEB3;
+  background: rgb(254, 255, 255);
+  box-shadow: 0px 4px 25px rgba(0, 0, 0, 0.15);
+
+  color: #484B4D;
+  user-select: none;
+}

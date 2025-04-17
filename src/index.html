@@ -1,13 +1,94 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title>TccFront</title>
-  <base href="/">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
-</head>
-<body>
-  <app-root></app-root>
-</body>
+  <head>
+    <!-- <link rel="stylesheet" href="/api/styles" /> -->
+
+    <!-- BASE META -->
+    <meta charset="utf-8" />
+    <title></title>
+    <base href="/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- FAVICON -->
+    <!-- <link rel="icon" type="image/x-icon" href="/api/favicon"/> -->
+    <!-- <link rel="icon" type="image/x-icon"  href="./assets/favicon.png"/> -->
+
+    <!-- FONTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,600;1,700;1,800&display=swap"
+    />
+
+    <!-- FONTS__ROBOTO -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- FONTS__NUNITO -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- FONTS__MONTSERRAT -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+    <!-- ICONS -->
+    <!-- <script src="/assets/iconify.min.js"></script> -->
+    <!-- <script src="https://accounts.google.com/gsi/client"></script>
+     -->
+     <!-- <script src="assets/gsi.min.js"></script> -->
+    <script type="text/javascript" src="https://apis.google.com/js/api.js"></script>
+    <meta name="robots" content="noindex">
+  </head>
+  <body>
+    <app-root></app-root>
+  </body>
+   <!-- <script src="https://apis.google.com/js/platform.js" async defer></script> -->
+<!-- <script type="text/javascript" src="https://apis.google.com/js/api.js?onload=onGoogleApiLoad"></script> --> 
+<script type="text/javascript">
+  var Tos;
+  (function(d, s, id, file) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s);
+      js.id = id;
+      js.onload = function() {
+        var config = {
+          trackBy: 'seconds',
+          trackHistoryChange: true,
+          callback: function(data) {
+            // give your endpoint URL/ server-side URL that is going to handle your TOS data which is of POST method. Eg. PHP, nodejs or python URL which saves this data to your DB
+            var endPointUrl = '/api/time-on-site'; // replace with your endpoint URL
+            if (data && data.trackingType) {
+                if (data.trackingType == 'tos') {
+                    if (Tos.verifyData(data) != 'valid') {
+                        console.log('Data abolished!');
+                        return; 
+                    }
+                    const entryTime = new Date(data.entryTime);
+                    const exitTime = new Date(data.exitTime);
+                    if (exitTime - entryTime < 1000) {
+                        return;
+                    }
+                }
+                
+                // makes use of sendBeacon API in your browser.
+                if (navigator && typeof navigator.sendBeacon === 'function') {
+                    var blob = new Blob([JSON.stringify(data)], {type : 'application/json'});
+                    //navigator.sendBeacon(endPointUrl, blob);
+                }
+            }
+          }
+        };
+        if(TimeOnSiteTracker) {
+          Tos = new TimeOnSiteTracker(config);
+        }
+      };
+      js.src = file;fjs.parentNode.insertBefore(js, fjs);
+   } (document, 'script', 'TimeOnSiteTracker', '//cdn.jsdelivr.net/gh/saleemkce/timeonsite@1.2.1/timeonsitetracker.min.js'));
+  </script>
 </html>
