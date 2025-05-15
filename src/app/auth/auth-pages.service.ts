@@ -10,7 +10,7 @@ import {
     UrlTree,
 } from '@angular/router';
 
-import { ErrorReportingService } from '../services/errorReproting/error-reporting.service';
+// import { ErrorReportingService } from '../services/errorReproting/error-reporting.service';
 import { PlatformModalsService } from '../services/modals/platform-modals.service';
 import { SharedService } from '../shared/shared.service';
 
@@ -22,7 +22,7 @@ export class AuthGuard implements CanActivate, CanLoad {
         private sharedService: SharedService,
         private router: Router,
         public platModalService: PlatformModalsService,
-        private errorHandler: ErrorReportingService
+        // private errorHandler: ErrorReportingService
     ) { }
 
     // Verifica se o usuário está logado pelo token ativo

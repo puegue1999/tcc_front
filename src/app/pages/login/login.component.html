@@ -1,23 +1,33 @@
 <div class="body-login">
-    <div class="header-login">
-        <p class="welcome">Bem vindo(a)!</p>
-        <p class="make-login">Faça login para acessar sua conta</p>
-    </div>
-    <div class="card-login">
-        <div class="dados-login">
-            <div class="elements-login">
-                <p>Email</p>
-                <input
-                    type="email"
-                />
-            </div>
-            <div class="elements-login">
-                <p>Senha</p>
-                <input
-                    type="password"
-                />
-            </div>
-            <button>Entrar</button>
+  <div class="header-login">
+    <p class="welcome">Bem vindo(a)!</p>
+    <p class="make-login">Faça login para acessar sua conta</p>
+  </div>
+  <div class="card-login">
+    <div class="dados-login" [formGroup]="loginForm">
+      <div class="elements-login">
+        <p>Email</p>
+        <input type="email" formControlName="email"/>
+        <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
+          Email inválido
         </div>
+      </div>
+      <div class="elements-login">
+        <p>Senha</p>
+        <input type="password" formControlName="password"/>
+      </div>
+      <button (click)="login()">Entrar</button>
     </div>
+    <div class="or-line">
+      <div class="line"></div>
+      <p>Ou</p>
+      <div class="line"></div>
+    </div>
+    <div>
+      <p>Google</p>
+    </div>
+    <div class="new-acount">
+      <p>Não possui uma conta? <a (click)="register()">Clique aqui</a></p>
+    </div>
+  </div>
 </div>

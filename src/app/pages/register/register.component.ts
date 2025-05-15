@@ -1,49 +1,34 @@
 import { Component, OnInit } from '@angular/core';
+import { UntypedFormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
+import { TranslateServiceLocale } from '../../components/translate/translate.service';
 import { PlatformModalsService } from '../../services/modals/platform-modals.service';
 import { SharedService } from '../../shared/shared.service';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { RegisterService } from './register.service';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'],
-  standalone: false,
+  selector: 'app-register',
+  templateUrl: './register.component.html',
+  styleUrls: ['./register.component.scss'],
 })
-export class LoginComponent implements OnInit {
+export class RegisterComponent implements OnInit {
   show = false;
   userHasToken = false;
   hasTokenPartner = false;
-  loginForm!: FormGroup;
 
   constructor(
     private router: Router,
+    private formBuilder: UntypedFormBuilder,
+    private registerService: RegisterService,
+    private translateServiceLocale: TranslateServiceLocale,
     private sharedService: SharedService,
     public platModalService: PlatformModalsService,
-    private route: ActivatedRoute,
-    private formBuilder: FormBuilder
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
     this.show = true;
-    this.loginForm = this.formBuilder.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(5)]],
-    });
-  }
-
-  register() {
-    this.router.navigate(['register']);
-  }
-
-  login() {
-    this.router.navigate(['home']);
   }
 
   getTokenStatus() {
@@ -59,5 +44,15 @@ export class LoginComponent implements OnInit {
     ) {
       this.userHasToken = true;
     }
+  }
+
+  updateUser() {
+    this.registerService.register().subscribe((data) => {
+      console.log(data);
+    });
+  }
+
+  toLogin() {
+    this.router.navigate(['login']);
   }
 }
