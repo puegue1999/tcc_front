@@ -13,8 +13,9 @@ const routes: Routes = [
   },
   {
     path: 'register',
-    component: RegisterComponent,
     title: 'TCC - Registro',
+    loadChildren: () =>
+      import('./pages/register/register.module').then((m) => m.RegisterModule),
   },
   {
     path: 'home',

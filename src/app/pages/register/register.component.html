@@ -1,27 +1,38 @@
 <div class="body-register">
   <div class="header-register">
-    <p class="welcome">Bem vindo(a)!</p>
-    <p class="make-register">Crie sua conta</p>
+    <p class="welcome">Crie sua conta</p>
   </div>
   <div class="card-register">
-    <div class="dados-register">
+    <div class="dados-register" [formGroup]="registerForm">
       <div class="elements-register">
         <p>Nome</p>
-        <input type="email" />
+        <input type="email" formControlName="name"/>
+        <div class="error" *ngIf="registerForm.get('name')?.invalid && registerForm.get('name')?.touched">
+          Nome é obrigatório
+        </div>
       </div>
       <div class="elements-register">
         <p>Email</p>
-        <input type="email" />
+        <input type="email" formControlName="email"/>
+        <div class="error" *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched">
+          Email é obrigatório
+        </div>
       </div>
       <div class="elements-register">
         <p>Senha</p>
-        <input type="password" />
+        <input type="password" formControlName="password"/>
+        <div class="error" *ngIf="registerForm.get('email')?.invalid && registerForm.get('password')?.touched">
+          A senha precisa ter ao menos 5 dígitos
+        </div>
       </div>
       <div class="elements-register">
         <p>Confirmar senha</p>
-        <input type="password" />
+        <input type="password" formControlName="confirmPassword"/>
+        <div class="error" *ngIf="registerForm.errors?.['passwordMismatch'] && registerForm.get('confirmPassword')?.touched">
+          A confirmação da senha está incorreta
+        </div>
       </div>
-      <button (click)="toLogin()">Registrar</button>
+      <button (click)="registerUser()" [disabled]="!registerForm.valid">Registrar</button>
     </div>
   </div>
 </div>

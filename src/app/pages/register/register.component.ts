@@ -1,5 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormBuilder } from '@angular/forms';
+import {
+  FormGroup,
+  FormBuilder,
+  Validators,
+  ValidatorFn,
+  AbstractControl,
+  ValidationErrors,
+} from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 import { TranslateServiceLocale } from '../../components/translate/translate.service';
@@ -11,44 +18,46 @@ import { RegisterService } from './register.service';
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss'],
+  standalone: false,
 })
 export class RegisterComponent implements OnInit {
-  show = false;
-  userHasToken = false;
-  hasTokenPartner = false;
-
   constructor(
     private router: Router,
-    private formBuilder: UntypedFormBuilder,
+    private formBuilder: FormBuilder,
     private registerService: RegisterService,
-    private translateServiceLocale: TranslateServiceLocale,
-    private sharedService: SharedService,
-    public platModalService: PlatformModalsService,
-    private route: ActivatedRoute
+    public platModalService: PlatformModalsService
   ) {}
 
+  registerForm!: FormGroup;
+
   ngOnInit(): void {
-    this.show = true;
+    this.registerForm = this.formBuilder.group(
+      {
+        name: ['', [Validators.required]],
+        email: ['', [Validators.required, Validators.email]],
+        password: ['', [Validators.required, Validators.minLength(5)]],
+        confirmPassword: ['', [Validators.required, Validators.minLength(5)]],
+      },
+      { validators: this.passwordMatchValidator }
+    );
   }
 
-  getTokenStatus() {
-    const route = this.route.snapshot.queryParams;
+  passwordMatchValidator: ValidatorFn = (
+    control: AbstractControl
+  ): ValidationErrors | null => {
+    const password = control.get('password');
+    const confirmPassword = control.get('confirmPassword');
 
-    if (Object.prototype.hasOwnProperty.call(route, 'token_partner')) {
-      this.hasTokenPartner = true;
-      localStorage.removeItem('token');
-    }
-    if (
-      this.sharedService.fnUserHasToken() &&
-      this.sharedService.fnUserHasValidToken()
-    ) {
-      this.userHasToken = true;
-    }
-  }
+    return password &&
+      confirmPassword &&
+      password.value !== confirmPassword.value
+      ? { passwordMismatch: true }
+      : null;
+  };
 
-  updateUser() {
-    this.registerService.register().subscribe((data) => {
-      console.log(data);
+  registerUser() {
+    this.registerService.register(this.registerForm.value).subscribe(() => {
+      this.toLogin();
     });
   }
 

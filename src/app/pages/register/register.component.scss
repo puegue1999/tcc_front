@@ -46,6 +46,7 @@
       align-items: flex-start;
       justify-content: center;
       padding: 1rem 0rem;
+      height: 4rem;
 
       p {
         font-size: 24px;
@@ -59,14 +60,14 @@
         border-width: 1px;
         --tw-border-opacity: 1;
         border-color: rgba(227, 228, 228, var(--tw-border-opacity));
-        height: 40px;
+        height: 60px;
         width: 100%;
         font-weight: 400;
         font-size: 14px;
         line-height: 19px;
         color: #222b45;
         margin: 0;
-        padding-left: 12px;
+        padding: 0.5rem;
       }
     }
 
@@ -100,6 +101,11 @@
       &:hover,
       &:active {
         background-color: color.scale(#575757, $lightness: -20%);
+      }
+
+      &:disabled {
+        background-color: color.scale(#575757, $lightness: 40%);
+        cursor: auto;
       }
 
       &:focus {
