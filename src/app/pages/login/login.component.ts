@@ -9,6 +9,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { LoginService } from './login.service';
 
 @Component({
   selector: 'app-login',
@@ -17,7 +18,6 @@ import {
   standalone: false,
 })
 export class LoginComponent implements OnInit {
-  show = false;
   userHasToken = false;
   hasTokenPartner = false;
   loginForm!: FormGroup;
@@ -27,11 +27,11 @@ export class LoginComponent implements OnInit {
     private sharedService: SharedService,
     public platModalService: PlatformModalsService,
     private route: ActivatedRoute,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private loginService: LoginService,
   ) {}
 
   ngOnInit(): void {
-    this.show = true;
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(5)]],
@@ -43,7 +43,10 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    this.router.navigate(['home']);
+    this.loginService.login(this.loginForm.value).subscribe((data) => {
+      localStorage.setItem('token', data.token);
+      this.router.navigate(['home']);
+    });
   }
 
   getTokenStatus() {

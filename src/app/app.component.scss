@@ -1,76 +1,78 @@
 #app__container {
+  width: 100vw;
+  max-width: 100%;
+  height: var(--screenHeight);
+  max-height: var(--screenHeight);
+  display: grid;
+  grid-template: 78px 1fr / 78px 1fr;
+  grid-template-areas:
+    "header header"
+    "sidebar  outlet";
+}
+
+.impersonating {
+  border: 8px solid rgba(232, 83, 44, 0.8);
+  z-index: 35;
+  overflow: hidden;
+}
+
+.header {
+  grid-area: header;
+}
+
+.sidebar {
+  grid-area: sidebar;
+}
+
+.router-outlet {
+  grid-area: outlet;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  padding: 2.5rem 2.8125rem 0;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.third-cookie {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  position: sticky;
+  top: -40px;
+  z-index: 1;
+  margin-bottom: 20px;
+}
+
+app-home-layout {
+  width: 100%;
+}
+
+@media (max-width: 1000px) {
+  .router-outlet {
+    padding: 20px 30px 0 30px;
+  }
+}
+
+@media (max-width: 944px) {
+  #app__container {
     width: 100vw;
     max-width: 100%;
     height: var(--screenHeight);
-    max-height: var(--screenHeight);
     display: grid;
-    grid-template: 78px 1fr / 78px 1fr;
-    grid-template-areas: "header header"
-                         "sidebar  outlet";
+    grid-template: 54px 1fr / 0px 1fr;
+    grid-template-areas:
+      "header header"
+      "sidebar  outlet";
   }
-  
-  .impersonating{
-      border: 8px solid rgba(232, 83, 44, .8);
-      z-index: 35;
-      overflow: hidden;
-  }
-  
-  .header {
-    grid-area: header;
-  }
-  
-  .sidebar {
-    grid-area: sidebar;
-  }
-  
-  .router-outlet {
-    grid-area: outlet;
-  
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  
-    padding: 2.5rem 2.8125rem 0;
-    overflow-y: scroll;
-    overflow-x: hidden;
-  }
-  
+}
+
+@media (max-width: 375px) {
+  .router-outlet,
   .third-cookie {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    position: sticky;
-    top: -40px;
-    z-index: 1;
-    margin-bottom: 20px;
+    padding: 10px 20px 0 20px;
   }
-  
-  app-home-layout {
-    width: 100%;
-  }
-  
-  @media (max-width: 1000px) {
-    .router-outlet {
-      padding: 20px 30px 0 30px;
-    }
-  }
-  
-  @media (max-width: 944px) {
-    #app__container {
-      width: 100vw;
-      max-width: 100%;
-      height: var(--screenHeight);
-      display: grid;
-      grid-template: 54px 1fr / 0px 1fr;
-      grid-template-areas: "header header"
-                           "sidebar  outlet";
-    }
-  }
-  
-  @media (max-width: 375px) {
-    .router-outlet, .third-cookie {
-      padding: 10px 20px 0 20px;
-    }
-  }
-  
+}
